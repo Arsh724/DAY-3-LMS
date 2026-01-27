@@ -34,9 +34,8 @@ public class StudentService {
     }
 
     //Delete
-    public StudentModel deleteStudent(String id) {
+    public void deleteStudent(String id) {
         StudentModel existingStudent =studentRepository.findById(id).orElseThrow(() -> new RuntimeException("No Student found"));
-        studentRepository.delete(existingStudent);
-        return existingStudent;
+        studentRepository.deleteById(String.valueOf(existingStudent));
     }
 }

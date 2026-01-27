@@ -31,7 +31,8 @@ public class StudentController {
     }
 
     @DeleteMapping("/{id}")
-    public StudentModel deleteStudent(@PathVariable String id) {
-        return studentService.deleteStudent(id);
+    public String deleteStudent(@PathVariable String id) {
+        studentService.deleteStudent(id);
+        return "Student Deleted Successfully";
     }
 }
