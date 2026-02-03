@@ -1,38 +1,42 @@
 package com.example.day3lms.controller;
 
+import com.example.day3lms.dto.StudentRequestDto;
+import com.example.day3lms.dto.StudentResponseDto;
 import com.example.day3lms.model.StudentModel;
 import com.example.day3lms.service.StudentService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
 @RestController
+@RequestMapping("/students")
 public class StudentController {
 
-    private final StudentService studentService;
-    public StudentController(StudentService studentService) {
-        this.studentService = studentService;
+    private final StudentService service;
+
+    public StudentController(StudentService service) {
+        this.service = service;
     }
 
-    // Create function API
-    @PostMapping("add-student/")
-    public StudentModel addStudent(@RequestBody StudentModel student) {
-        return studentService.addStudent(student);
+    @PostMapping
+    public StudentResponseDto addStudent(@Valid @RequestBody StudentRequestDto dto) {
+        return service.addStudent(dto);
     }
 
-    @GetMapping("/students")
-    public List<StudentModel> getStudents() {
-        return studentService.getStudents();
+    @GetMapping
+    public List<StudentResponseDto> getStudents() {
+        return service.getStudents();
     }
 
-    @PutMapping("/update/{id}")
-    public StudentModel updateStudent(@PathVariable String id, @RequestBody StudentModel student) {
-        return studentService.updateStudent(id, student);
+    @PutMapping("/{id}")
+    public StudentResponseDto updateStudent(@PathVariable String id,
+                                            @Valid @RequestBody StudentRequestDto dto) {
+        return service.updateStudent(id, dto);
     }
 
     @DeleteMapping("/{id}")
     public String deleteStudent(@PathVariable String id) {
-        studentService.deleteStudent(id);
-        return "Student Deleted Successfully";
+        service.deleteStudent(id);
+        return "Deleted";
     }
 }
