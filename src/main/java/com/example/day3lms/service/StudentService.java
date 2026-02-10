@@ -1,5 +1,6 @@
 package com.example.day3lms.service;
 
+import com.example.day3lms.dto.StudentPatchDto;
 import com.example.day3lms.dto.StudentRequestDto;
 import com.example.day3lms.dto.StudentResponseDto;
 import com.example.day3lms.exception.StudentNotFoundException;
@@ -18,6 +19,18 @@ public class StudentService {
         this.repository = repository;
     }
 
+    public StudentModel patchStudent(String id, StudentPatchDto dto) {
+        StudentModel student = repository.findById(id)
+                .orElseThrow(() ->
+                        new StudentNotFoundException("Student not found with id: " + id)
+                );
+
+        if (dto.getName() != null) student.setName(dto.getName());
+        if (dto.getAge() != null) student.setAge(dto.getAge());
+        if (dto.getEmail() != null) student.setEmail(dto.getEmail());
+
+        return repository.save(student);
+    }
     public StudentResponseDto addStudent(StudentRequestDto dto) {
         StudentModel student = new StudentModel();
         student.setName(dto.getName());

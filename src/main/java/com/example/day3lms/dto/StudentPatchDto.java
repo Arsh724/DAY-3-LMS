@@ -7,10 +7,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
-public class StudentResponseDto {
-    String id;
+@AllArgsConstructor
+public class StudentPatchDto {
     String name;
     Integer age;
     String email;
